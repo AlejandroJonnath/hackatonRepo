@@ -1,0 +1,181 @@
+/* Barra de navegación */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #222; /* Fondo gris oscuro */
+  padding: 0.75rem 2rem;
+  color: white;
+  font-family: 'Arial', sans-serif;
+  height: 70px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1000;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+}
+
+/* Logo */
+.navbar-logo {
+  height: 50px;
+  cursor: pointer;
+}
+
+/* Enlaces del centro */
+.navbar-center {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+
+.navbar-link {
+  color: #ffffffcc;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.navbar-link:hover {
+  color: #fff;
+  transform: scale(1.1);
+}
+
+/* Dropdowns */
+.navbar-dropdown {
+  position: relative;
+}
+
+.navbar-dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #333;
+  padding: 0.75rem 1rem;
+  top: 100%;
+  left: 0;
+  border-radius: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  min-width: 180px;
+  z-index: 999;
+}
+
+.navbar-dropdown:hover .navbar-dropdown-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.navbar-dropdown-link {
+  color: #ffffffcc;
+  text-decoration: none;
+  padding: 0.25rem 0;
+  transition: color 0.3s ease;
+}
+
+.navbar-dropdown-link:hover {
+  color: #fff;
+}
+
+/* Sección derecha */
+.navbar-right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+/* Acciones agrupadas (idioma y botón) */
+.navbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Selector de idioma */
+.language-selector {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.language-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.2s ease;
+}
+
+.language-button:hover {
+  transform: scale(1.1);
+}
+
+.language-flag {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.language-button.selected {
+  filter: drop-shadow(0 0 3px orange);
+}
+
+/* Botón de donación */
+.navbar-donate-button {
+  background: linear-gradient(135deg, #ffa000, #ff6f00);
+  size: 555px;
+  color: white;
+  font-weight: bold;
+  padding: 2rem 3rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(255, 111, 0, 0.4);
+  white-space: nowrap;
+}
+
+.navbar-donate-button:hover {
+  background: linear-gradient(135deg, #ff8f00, #e65100);
+  transform: scale(1.05);
+  box-shadow: 0 6px 14px rgba(255, 111, 0, 0.6);
+}
+
+/* Asegura que el contenido no quede oculto detrás del navbar */
+body {
+  margin: 0;
+  padding-top: 70px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    height: auto;
+    padding: 1rem;
+  }
+
+  .navbar-center {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+
+  .navbar-actions {
+    flex-direction: column;
+    align-items: flex-start;
+    margin-top: 1rem;
+  }
+
+  .navbar-donate-button {
+    align-self: flex-start;
+  }
+
+  .navbar-dropdown-content {
+    position: static;
+    box-shadow: none;
+    border-radius: 0;
+    padding-left: 1rem;
+  }
+}
