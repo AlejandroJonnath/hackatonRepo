@@ -123,7 +123,7 @@ function Navbar() {
           </ul>
         </li>
 
-        <li><a href="#">Contacto</a></li>
+        <li><a href="#">Contactos</a></li>
       </ul>
 
       {/* Botón "Donar Ahora" centrado */}
