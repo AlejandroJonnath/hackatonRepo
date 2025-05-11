@@ -1,181 +1,535 @@
-/* Barra de navegación */
+/* =========================
+   PALETA DE COLORES BAQ.EC + PERSONALIZADA
+   ========================= */
+:root {
+  --baq-blue: #002856;
+  /* Azul institucional baq.ec */
+  --baq-yellow: #FFD100;
+  /* Amarillo institucional baq.ec */
+  --baq-red: #E10600;
+  /* Rojo institucional baq.ec */
+  --baq-white: #fff;
+  /* Blanco */
+  --baq-gray: #e0e6f7;
+  /* Gris claro para bordes y fondos */
+  --baq-orange: #f37805;
+  /* Naranja/amarillo para fondo navbar */
+  --donate-green: #19f189;
+  /* Verde para el botón Donate */
+  --donate-green-dark: #13c96b;
+  /* Verde oscuro para hover del botón Donate */
+}
+
+/* =========================
+   NAVBAR GENERAL
+   ========================= */
 .navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #222; /* Fondo gris oscuro */
-  padding: 0.75rem 2rem;
-  color: white;
-  font-family: 'Arial', sans-serif;
-  height: 70px;
-  position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
+  display: grid;
+  grid-template-columns: 48px 1fr 48px;
+  align-items: center;
+  padding: 0.7rem 32px;
+  background: var(--baq-orange);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.18);
+  color: var(--baq-blue);
+  font-size: 22px;
   z-index: 1000;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+  position: relative;
+  min-height: 64px;
+  transition: padding 0.3s, font-size 0.3s, background 0.3s;
 }
 
-/* Logo */
-.navbar-logo {
-  height: 50px;
-  cursor: pointer;
+/* =========================
+   SECCIÓN IZQUIERDA (Logo y Título)
+   ========================= */
+.navbar-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
 }
 
-/* Enlaces del centro */
+.logo {
+  height: 48px;
+  object-fit: contain;
+  transition: height 0.3s;
+}
+
+.site-title {
+  font-size: 1.6rem;
+  font-weight: bold;
+  white-space: nowrap;
+  letter-spacing: 1px;
+  color: var(--baq-blue);
+  text-shadow: 0 2px 8px rgba(0, 40, 86, 0.10);
+  transition: font-size 0.3s, color 0.3s;
+}
+
+/* =========================
+   SECCIÓN CENTRAL (Menú)
+   ========================= */
 .navbar-center {
   display: flex;
+  justify-content: center;
   align-items: center;
-  gap: 1.5rem;
+  list-style: none;
+  gap: 32px;
+  transition: all 0.3s;
 }
 
-.navbar-link {
-  color: #ffffffcc;
+.navbar-center li a {
   text-decoration: none;
-  font-weight: 600;
-  font-size: 1rem;
-  transition: color 0.3s ease, transform 0.2s ease;
+  color: var(--baq-white);
+  font-size: 1.15rem;
+  font-weight: 500;
+  padding: 0.5rem 1.2rem;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+  transition: color 0.3s, background 0.3s;
 }
 
-.navbar-link:hover {
-  color: #fff;
-  transform: scale(1.1);
+.navbar-center li a:hover,
+.navbar-center li a:focus {
+  color: var(--baq-orange);
+  background: var(--baq-white);
+  outline: none;
 }
 
-/* Dropdowns */
-.navbar-dropdown {
+/* =========================
+   DROPDOWN (Menú desplegable)
+   ========================= */
+.dropdown {
   position: relative;
 }
 
-.navbar-dropdown-content {
-  display: none;
-  position: absolute;
-  background-color: #333;
-  padding: 0.75rem 1rem;
-  top: 100%;
-  left: 0;
-  border-radius: 5px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
-  min-width: 180px;
-  z-index: 999;
-}
-
-.navbar-dropdown:hover .navbar-dropdown-content {
-  display: flex;
-  flex-direction: column;
-}
-
-.navbar-dropdown-link {
-  color: #ffffffcc;
-  text-decoration: none;
-  padding: 0.25rem 0;
-  transition: color 0.3s ease;
-}
-
-.navbar-dropdown-link:hover {
-  color: #fff;
-}
-
-/* Sección derecha */
-.navbar-right {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-}
-
-/* Acciones agrupadas (idioma y botón) */
-.navbar-actions {
-  display: flex;
-  align-items: center;
-  gap: 1rem;
-}
-
-/* Selector de idioma */
-.language-selector {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.language-button {
+.dropdown-toggle {
   background: none;
   border: none;
+  color: var(--baq-white);
+  font-size: 1.15rem;
   cursor: pointer;
-  padding: 0;
-  transition: transform 0.2s ease;
+  padding: 0.5rem 1.2rem;
+  font-weight: 600;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+  transition: color 0.3s, background 0.3s;
 }
 
-.language-button:hover {
-  transform: scale(1.1);
+.dropdown-toggle:hover,
+.dropdown-toggle:focus {
+  color: var(--baq-orange);
+  background: var(--baq-white);
+  outline: none;
 }
 
-.language-flag {
-  width: 24px;
-  height: 24px;
-  object-fit: contain;
+.dropdown-menu {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background: var(--baq-orange);
+  padding: 0.5rem 0;
+  border-radius: 10px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
+  display: none;
+  flex-direction: column;
+  min-width: 210px;
+  z-index: 1000;
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s, transform 0.3s;
 }
 
-.language-button.selected {
-  filter: drop-shadow(0 0 3px orange);
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu {
+  display: flex;
+  opacity: 1;
+  transform: translateY(0);
 }
 
-/* Botón de donación */
-.navbar-donate-button {
-  background: linear-gradient(135deg, #ffa000, #ff6f00);
-  size: 555px;
-  color: white;
-  font-weight: bold;
-  padding: 2rem 3rem;
-  border-radius: 6px;
+.dropdown-menu li {
+  list-style: none;
+  margin: 0.2rem 0;
+}
+
+.dropdown-menu li a {
+  color: var(--baq-blue);
   text-decoration: none;
-  font-size: 1rem;
-  transition: all 0.3s ease;
-  box-shadow: 0 4px 10px rgba(255, 111, 0, 0.4);
-  white-space: nowrap;
+  padding: 0.8rem 2.2rem;
+  font-size: 1.05rem;
+  border-radius: 8px;
+  font-weight: 600;
+  background: transparent;
+  display: block;
+  transition: background 0.3s, color 0.3s;
 }
 
-.navbar-donate-button:hover {
-  background: linear-gradient(135deg, #ff8f00, #e65100);
-  transform: scale(1.05);
-  box-shadow: 0 6px 14px rgba(255, 111, 0, 0.6);
+.dropdown-menu li a:hover,
+.dropdown-menu li a:focus {
+  background: var(--baq-blue);
+  color: var(--baq-white);
+  outline: none;
 }
 
-/* Asegura que el contenido no quede oculto detrás del navbar */
-body {
-  margin: 0;
-  padding-top: 70px;
+.dropdown-menu li:not(:last-child) {
+  border-bottom: 1px solid #e0e6f7;
+  margin-bottom: 0.2rem;
+  padding-bottom: 0.2rem;
 }
 
-/* Responsive */
-@media (max-width: 768px) {
+/* =========================
+   SECCIÓN DERECHA (Botón Donate)
+   ========================= */
+.navbar-right {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  margin-right: 0;
+}
+
+
+/* =========================
+   BOTÓN DONATE (Cuadrado, Bordes Laterales, Más Grande, Legible)
+   ========================= */
+.animated-button {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 22px 48px;
+  border-top: none;
+  border-bottom: none;
+  border-left: 4px solid #19f189;
+  border-right: 4px solid #19f189;
+  font-size: 20px;
+  background-color: #19f189;
+  border-radius: 10px;
+  font-weight: 700;
+  color: #1f387e;
+  box-shadow: 0 0 0 2px #ffffff;
+  cursor: pointer;
+  overflow: hidden;
+  transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+  min-width: 250px;
+  min-height: 64px;
+  letter-spacing: 0.5px;
+}
+
+.animated-button svg {
+  position: absolute;
+  width: 28px;
+  fill: #1f387e;
+  z-index: 9;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .arr-1 {
+  right: 24px;
+}
+
+.animated-button .arr-2 {
+  left: -25%;
+}
+
+.animated-button .circle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 20px;
+  height: 20px;
+  background-color: #c5e5e4;
+  border-radius: 50%;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.animated-button .text {
+  position: relative;
+  z-index: 1;
+  transform: translateX(-12px);
+  transition: all 0.8s cubic-bezier(0.23, 1, 0.32, 1);
+  font-size: 1.25rem;
+}
+
+.animated-button:hover {
+  box-shadow: 0 0 0 16px #19f18944;
+  color: #212121;
+  border-radius: 10px;
+  background-color: #13c96b;
+  border-left-color: #13c96b;
+  border-right-color: #13c96b;
+}
+
+.animated-button:hover .arr-1 {
+  right: -25%;
+}
+
+.animated-button:hover .arr-2 {
+  left: 24px;
+}
+
+.animated-button:hover .text {
+  transform: translateX(12px);
+}
+
+.animated-button:hover svg {
+  fill: #1f387e;
+}
+
+.animated-button:active {
+  scale: 0.97;
+  box-shadow: 0 0 0 4px #19f189;
+}
+
+.animated-button:hover .circle {
+  width: 240px;
+  height: 240px;
+  opacity: 1;
+}
+
+/* Responsive: botón más compacto en móvil */
+@media (max-width: 600px) {
+  .animated-button {
+    padding: 12px 18px;
+    font-size: 15px;
+    min-width: 100px;
+    border-width: 3px;
+  }
+
+  .animated-button .text {
+    font-size: 1rem;
+  }
+
+  .animated-button svg {
+    width: 20px;
+  }
+}
+
+/* =========================
+   HAMBURGER ICON (Menú móvil)
+   ========================= */
+.navbar-hamburger {
+  display: none;
+  background: none;
+  border: none;
+  font-size: 2.2rem;
+  color: var(--baq-blue);
+  cursor: pointer;
+  align-items: center;
+  z-index: 1100;
+  padding: 0 10px;
+  transition: color 0.3s;
+}
+
+.navbar-hamburger:focus {
+  color: var(--donate-green);
+  outline: none;
+}
+
+/* =========================
+   RESPONSIVE DESIGN
+   ========================= */
+
+/* Tablet: Ajustes de paddings, fuentes y tamaños */
+@media (max-width: 1300px) {
   .navbar {
-    flex-direction: column;
-    align-items: flex-start;
-    height: auto;
-    padding: 1rem;
+    padding: 0.7rem 10px;
+    grid-template-columns: 40px 1fr 40px;
+    font-size: 18px;
+    min-height: 56px;
   }
 
   .navbar-center {
+    gap: 14px;
+  }
+
+  .logo {
+    height: 36px;
+  }
+
+  .site-title {
+    font-size: 1.1rem;
+  }
+
+  .animated-button {
+    padding: 14px 28px;
+    font-size: 17px;
+  }
+}
+
+/* Mobile: Navbar compacto, menú hamburguesa, menú desplegable vertical */
+@media (max-width: 1250px) {
+  .navbar {
+    grid-template-columns: 36px 1fr 36px;
+    padding: 0.4rem 2px;
+    min-height: 48px;
+    font-size: 15px;
+    background: var(--baq-orange);
+  }
+
+  /* Hamburger visible y a la izquierda */
+  .navbar-hamburger {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    grid-column: 1 / 2;
+    z-index: 1100;
+    margin-left: 0;
+  }
+
+  /* Logo y título a la derecha */
+  .navbar-left {
+    justify-content: flex-end;
+    align-items: center;
+    grid-column: 3 / 4;
+    order: 3;
+    width: 100%;
+    gap: 4px;
+  }
+
+  .logo {
+    height: 50px;
+  }
+
+  .site-title {
+    font-size: 0.9rem;
+  }
+
+  /* Donate button centrado y grande */
+  .navbar-right {
+    grid-column: 2 / 3;
+    justify-content: center;
+    align-items: center;
+    margin-right: 0;
+    order: 2;
+    width: 100%;
+  }
+
+  .animated-button {
+    margin: 0 65px;
+    padding: 12px 18px;
+    font-size: 15px;
+    min-width: 220px;
+    max-width: 90vw;
+    border-width: 3px;
+  }
+
+  .animated-button .text {
+    font-size: 1rem;
+  }
+
+  .animated-button svg {
+    width: 22px;
+  }
+  .animated-button:hover {
+    box-shadow: 0 0 0 16px #19f18944;
+    color: #212121;
+    border-radius: 10px;
+    background-color: #13c96b;
+    border-left-color: #13c96b;
+    border-right-color: #13c96b;
+  }
+  .animated-button:hover .arr-1 {
+    right: -25%;
+  }
+  .animated-button:hover .arr-2 {
+    left: 9px;
+  }
+  .animated-button:hover .text {
+    transform: translateX(12px);
+  }
+  
+
+  /* Menú oculto por defecto, aparece al abrir el menú hamburguesa */
+  .navbar-center {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100vw;
+    background: var(--baq-orange);
     flex-direction: column;
-    align-items: flex-start;
-    gap: 1rem;
-    margin-top: 1rem;
+    align-items: stretch;
+    gap: 0;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+    z-index: 1050;
+    padding: 0.5rem 0;
+    border-radius: 0 0 12px 12px;
+    animation: navbarMenuFadeIn 0.3s;
   }
 
-  .navbar-actions {
-    flex-direction: column;
-    align-items: flex-start;
-    margin-top: 1rem;
+  .navbar-center.open {
+    display: flex;
   }
 
-  .navbar-donate-button {
-    align-self: flex-start;
+  .navbar-center li {
+    width: 100%;
+    text-align: center;
+    margin: 0;
+    padding: 0.9rem 0;
+    border-bottom: 1px solid #e0e6f7;
   }
 
-  .navbar-dropdown-content {
+  .navbar-center li:last-child {
+    border-bottom: none;
+  }
+
+  .navbar-center li a {
+    color: var(--baq-white);
+    font-size: 1.15rem;
+    padding: 0.9rem 0;
+    display: block;
+    width: 100%;
+    font-weight: 600;
+    border-radius: 0;
+  }
+
+  .navbar-center li a:active {
+    background: var(--baq-white);
+    color: var(--baq-orange);
+  }
+
+  /* Dropdown en móvil: ocupa todo el ancho, sin sombra */
+  .dropdown-menu {
     position: static;
     box-shadow: none;
+    min-width: 100%;
     border-radius: 0;
-    padding-left: 1rem;
+    background: var(--baq-orange);
+    opacity: 1;
+    transform: none;
+    display: none;
+    padding: 0.2rem 0;
+  }
+
+  .dropdown.open .dropdown-menu {
+    display: flex;
+  }
+
+  .dropdown-menu li a {
+    color: var(--baq-blue);
+    font-size: 1.05rem;
+    font-weight: 700;
+    background: transparent;
+    padding: 0.8rem 0;
+  }
+
+  .dropdown-toggle::after {
+    content: " ▼";
+    font-size: 0.9em;
+  }
+}
+
+/* =========================
+   ANIMACIÓN DEL MENÚ (Aparecer)
+   ========================= */
+@keyframes navbarMenuFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

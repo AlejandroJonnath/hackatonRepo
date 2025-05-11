@@ -1,98 +1,147 @@
-import { Link } from 'react-router-dom';
+import React, { useState, useRef, useEffect } from 'react';
 import '../styles/NavBar.css';
 import logo from '../assets/logo.png';
-import { useState } from 'react';
-
-const translations = {
-  es: {
-    home: "Inicio",
-    about: "Conócenos",
-    donateHope: "Dona Esperanza",
-    donateFood: "Dona Alimentos",
-    donateMoney: "Dona Dinero",
-    donateTime: "Dona Tiempo",
-    findFood: "Encuentra Comida",
-    orgs: "Organizaciones Sociales",
-    families: "Programas de Atención a Familias",
-    contact: "Contáctanos",
-    donateNow: "DONAR AHORA",
-  },
-  en: {
-    home: "Home",
-    about: "About Us",
-    donateHope: "Donate Hope",
-    donateFood: "Donate Food",
-    donateMoney: "Donate Money",
-    donateTime: "Donate Time",
-    findFood: "Find Food",
-    orgs: "Social Organizations",
-    families: "Family Care Programs",
-    contact: "Contact Us",
-    donateNow: "DONATE NOW",
-  },
-};
 
 function Navbar() {
-  const [language, setLanguage] = useState('es');
+  const [menuOpen, setMenuOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState({
+    queDonar: false,
+    lugares: false,
+  });
+
+  const navbarRef = useRef(null);
+  // Ref para saber si el click fue en un toggle
+  const ignoreCloseRef = useRef(false);
+
+  // Cierra el menú y los dropdowns al hacer click fuera
+  useEffect(() => {
+    const handleClick = (e) => {
+      if (ignoreCloseRef.current) {
+        ignoreCloseRef.current = false;
+        return;
+      }
+      if (
+        navbarRef.current &&
+        !navbarRef.current.contains(e.target)
+      ) {
+        setMenuOpen(false);
+        setDropdownOpen({ queDonar: false, lugares: false });
+      }
+    };
+    document.addEventListener('mousedown', handleClick);
+    return () => document.removeEventListener('mousedown', handleClick);
+  }, []);
+
+  // Toggle para dropdowns (independientes)
+  const handleDropdownToggle = (dropdown) => {
+    setDropdownOpen((prev) => ({
+      ...prev,
+      [dropdown]: !prev[dropdown],
+    }));
+  };
+
+  // Cierra dropdowns al hacer mouse leave en desktop
+  const handleDropdownMouseLeave = (dropdown) => {
+    if (window.innerWidth > 600) {
+      setDropdownOpen((prev) => ({
+        ...prev,
+        [dropdown]: false,
+      }));
+    }
+  };
 
   return (
-    <nav className="navbar" role="navigation" aria-label="Main navigation bar">
-      <div className="navbar-left" role="banner">
-        <img src={logo} alt="Logo del sitio" className="navbar-logo" />
+    <nav className="navbar" ref={navbarRef}>
+      {/* Ícono hamburguesa a la izquierda */}
+      <button
+        className="navbar-hamburger"
+        aria-label="Abrir menú"
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        <span>☰</span>
+      </button>
+
+      {/* Logo a la derecha */}
+      <div className="navbar-left">
+        <img src={logo} alt="Logo" className="logo" />
       </div>
-      <div className="navbar-center">
-        <Link to="/" className="navbar-link">{translations[language].home}</Link>
-        <Link to="/conocenos" className="navbar-link">{translations[language].about}</Link>
 
-        <div className="navbar-dropdown">
-          <span className="navbar-link">{translations[language].donateHope}</span>
-          <div className="navbar-dropdown-content">
-            <Link to="/dona-alimentos" className="navbar-dropdown-link">{translations[language].donateFood}</Link>
-            <Link to="/dona-dinero" className="navbar-dropdown-link">{translations[language].donateMoney}</Link>
-            <Link to="/dona-tiempo" className="navbar-dropdown-link">{translations[language].donateTime}</Link>
-          </div>
-        </div>
+      {/* Enlaces principales al centro */}
+      <ul className={`navbar-center${menuOpen ? ' open' : ''}`}>
+        <li><a href="#">Inicio</a></li>
+        <li><a href="#">Conócenos</a></li>
 
-        <div className="navbar-dropdown">
-          <span className="navbar-link">{translations[language].findFood}</span>
-          <div className="navbar-dropdown-content">
-            <Link to="/organizaciones-sociales" className="navbar-dropdown-link">{translations[language].orgs}</Link>
-            <Link to="/programas-familias" className="navbar-dropdown-link">{translations[language].families}</Link>
-          </div>
-        </div>
+        <li
+          className={`dropdown${dropdownOpen.queDonar ? ' open' : ''}`}
+          onMouseEnter={() => {
+            if (window.innerWidth > 600) setDropdownOpen((prev) => ({ ...prev, queDonar: true }));
+          }}
+          onMouseLeave={() => handleDropdownMouseLeave('queDonar')}
+        >
+          <button
+            className="dropdown-toggle"
+            type="button"
+            onClick={e => {
+              e.stopPropagation();
+              ignoreCloseRef.current = true;
+              handleDropdownToggle('queDonar');
+            }}
+            aria-expanded={dropdownOpen.queDonar}
+          >
+            ¿Qué Donar?
+          </button>
+          <ul className="dropdown-menu">
+            <li><a href="#">Alimento</a></li>
+            <li><a href="#">Dinero</a></li>
+            <li><a href="#">Voluntariado</a></li>
+          </ul>
+        </li>
 
-        <Link to="/contactanos" className="navbar-link">{translations[language].contact}</Link>
-      </div>
+        <li
+          className={`dropdown${dropdownOpen.lugares ? ' open' : ''}`}
+          onMouseEnter={() => {
+            if (window.innerWidth > 600) setDropdownOpen((prev) => ({ ...prev, lugares: true }));
+          }}
+          onMouseLeave={() => handleDropdownMouseLeave('lugares')}
+        >
+          <button
+            className="dropdown-toggle"
+            type="button"
+            onClick={e => {
+              e.stopPropagation();
+              ignoreCloseRef.current = true;
+              handleDropdownToggle('lugares');
+            }}
+            aria-expanded={dropdownOpen.lugares}
+          >
+            Lugares
+          </button>
+          <ul className="dropdown-menu">
+            <li><a href="#">Organizaciones</a></li>
+            <li><a href="#">Programas Sociales</a></li>
+          </ul>
+        </li>
+
+        <li><a href="#">Contacto</a></li>
+      </ul>
+
+      {/* Botón "Donar Ahora" centrado */}
       <div className="navbar-right">
-        <div className="navbar-actions">
-          <div className="language-selector">
-            <button
-              className={`language-button ${language === 'es' ? 'selected' : ''}`}
-              onClick={() => setLanguage('es')}
-              aria-label="Cambiar idioma a Español"
-            >
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/197/197593.png"
-                alt="Bandera de España"
-                className="language-flag"
-              />
-            </button>
-            <button
-              className={`language-button ${language === 'en' ? 'selected' : ''}`}
-              onClick={() => setLanguage('en')}
-              aria-label="Switch to English"
-            >
-              <img
-                src="https://cdn-icons-png.flaticon.com/512/330/330425.png"
-                alt="UK flag"
-                className="language-flag"
-              />
-            </button>
-          </div>
-          <Link to="/donar" className="navbar-donate-button" aria-label={translations[language].donateNow}>
-            {translations[language].donateNow}
-          </Link>
-        </div>
+        <button className="animated-button">
+          <svg xmlns="http://www.w3.org/2000/svg" className="arr-2" viewBox="0 0 24 24">
+            <path
+              d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+            ></path>
+          </svg>
+          <span className="text">Donar Ahora</span>
+          <span className="circle"></span>
+          <svg xmlns="http://www.w3.org/2000/svg" className="arr-1" viewBox="0 0 24 24">
+            <path
+              d="M16.1716 10.9999L10.8076 5.63589L12.2218 4.22168L20 11.9999L12.2218 19.778L10.8076 18.3638L16.1716 12.9999H4V10.9999H16.1716Z"
+            ></path>
+          </svg>
+        </button>
       </div>
     </nav>
   );
